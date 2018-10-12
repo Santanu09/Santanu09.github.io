@@ -53,7 +53,7 @@ function displayStartScreen() {
     }
   }
 
-  rect(leftSide, topSide, buttonWidth, buttonHeight);
+  rect(leftSide, topSide,buttonWidth, buttonHeight);
 }
 
 function moveThing() {
