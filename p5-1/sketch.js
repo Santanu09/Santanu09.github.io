@@ -1,68 +1,22 @@
-<<<<<<< HEAD
 // Project Title
-=======
-// 
->>>>>>> 2cb3ffb76a61f42107735953e591fb763258fbcf
 // Your Name
 // Date
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
-<<<<<<< HEAD
 
-let fish;
-let grayFish;
-
-function preload() {
-  fish = loadImage("assets/fish.jpeg");
-=======
 // global variables
-
 let x, y, radius;
 let dx, dy;
 let dvd, dvdColor;
 let state;
 
 function preload() {
-  dvd = loadImage("images/logo.png");
->>>>>>> 2cb3ffb76a61f42107735953e591fb763258fbcf
+  dvd = loadImage("assets/220px-FraiseFruitPhoto.jpg");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-<<<<<<< HEAD
-  image(fish, 0, 0);
-  grayFish = makeGrayscale(fish);
-  image(grayFish, 0, 0);
-}
-
-function draw() {
-
-}
-
-function makeGrayscale(sourceImage) {
-  let img = createImage(sourceImage.width, sourceImage.height);
-
-  img.loadPixels();
-  sourceImage.loadPixels();
-
-  for (let x = 0; x < sourceImage.width; x++) {
-    for (let y = 0; y < sourceImage.height; y++) {
-      let p = sourceImage.get(x, y);
-
-      let r = red(p);
-      let g = green(p);
-      let b = blue(p);
-
-      let newPixel = color((r+g+b)/3, (r+g+b)/3, (r+g+b)/3);
-
-      img.set(x, y, newPixel);
-    }
-  }
-
-  img.updatePixels();
-  return img;
-=======
   x = width / 2;
   y = height / 2;
   radius = 50;
@@ -99,7 +53,7 @@ function displayStartScreen() {
     }
   }
 
-  rect(leftSide, topSide, buttonWidth, buttonHeight);
+  rect(leftSide, topSide,buttonWidth, buttonHeight);
 }
 
 function moveThing() {
@@ -124,5 +78,4 @@ function displayThing() {
   imageMode(CENTER);
   tint(dvdColor);
   image(dvd, x, y);
->>>>>>> 2cb3ffb76a61f42107735953e591fb763258fbcf
 }
