@@ -76,7 +76,7 @@ function circles(){
 
 
  function bombCollision() {
-     var temp = 0.5 * (ball_width + bomb_diameter) - 2; 
+     var temp = 0.5 * (ball_width + bomb_diameter) - 2;
      var distance;
 
 
