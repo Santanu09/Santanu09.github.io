@@ -5,77 +5,83 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-// global variables
-let x, y, radius;
-let dx, dy;
-let dvd, dvdColor;
-let state;
-
-function preload() {
-  dvd = loadImage("assets/220px-FraiseFruitPhoto.jpg");
-}
-
+// global variable
+let ball;
+let x = 350;
+let speed;
+let y = 350;
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  x = width / 2;
-  y = height / 2;
-  radius = 50;
-  dx = random(2, 5);
-  dy = random(2, 5);
-  dvdColor = color(0);
-  state = 1;
+  createCanvas(400, 400);
 }
 
 function draw() {
-  background(255);
-  if (state === 1) {
-    displayStartScreen();
+  background(0);
+  stroke(255);
+  strokeWeight(4);
+  noFill();
+  ellipse(x, y, 30, 30);
+
+  if (x < width) {
+    speed = -3;
   }
-  if (state === 2) {
-    moveThing();
-    displayThing();
+  if (x < 0) {
+    x = 400;
+  }
+  x = x + speed;
+}
+
+
+function keyPressed() {
+  if (keyCode === UP_ARROW) {
+    y = y - 10;
+  }
+  else if (keyCode === DOWN_ARROW) {
+    y = y + 10;
+  }
+  if (keyCode === LEFT_ARROW) {
+    x = x - 5;
+  }
+  else if (keyCode === RIGHT_ARROW) {
+    x = x + 5;
   }
 }
 
-function displayStartScreen() {
-  let buttonWidth = 400;
-  let buttonHeight = 200;
-  let leftSide = width / 2 - buttonWidth / 2;
-  let topSide = height / 2 - buttonHeight / 2;
-  let rightSide = leftSide + buttonWidth;
-  let bottomSide = topSide + buttonHeight;
-
-  fill(0);
-  if (mouseX >= leftSide && mouseX <= rightSide && mouseY >= topSide && mouseY <= bottomSide) {
-    fill(125);
-    if (mouseIsPressed) {
-      state = 2;
-    }
+function mousePressed() {
+  if (mousePressed) {
+    noLoop();
   }
-
-  rect(leftSide, topSide,buttonWidth, buttonHeight);
-}
-
-function moveThing() {
-  x += dx;
-  y += dy;
-
-  //check if bounce required
-  if (y + dvd.height / 2 >= height || y - dvd.height / 2 <= 0) {
-    dy = dy * -1;
-    dvdColor = color(random(255), random(255));
-  }
-
-  if (x + dvd.width / 2 >= width || x - dvd.width / 2 <= 0) {
-    dx = dx * -1;
-    dvdColor = color(random(255), random(255));
+  else {
+    loop();
   }
 }
 
-function displayThing() {
-  fill(0);
-  // ellipse(x, y, radius * 2, radius * 2);
-  imageMode(CENTER);
-  tint(dvdColor);
-  image(dvd, x, y);
+function DodgeingCircle(){
+
 }
+
+function circles(){
+
+}
+
+
+
+ function initBombs() {
+     for (let i = 0; i < numbofbombs; i++) {
+         bombacel[i] = random(.02, .03);
+         bombvel[i] = random(0, 5);
+         bombposX[i] = random(zapperwidth + (0.5 * ball_width), width);
+         bombposY[i] = random(-20, -0.5 * ball_width);
+     }
+ }
+
+
+ function bombCollision() {
+     var temp = 0.5 * (ball_width + bomb_diameter) - 2; 
+     var distance;
+
+
+     for (var i = 0; i < numbofbombs; i++) {
+         distance = dist(xpoint, ypoint, bombposX[i], bombposY[i]);
+         if (distance < temp) {
+             return true;
+         }
