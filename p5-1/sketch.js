@@ -5,83 +5,101 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-// global variable
-let ball;
-let x = 350;
-let speed;
-let y = 350;
+let gif_loadImg, gif_createImg;
+let tiles;
+let levelBackground;
+let platform, coin, box, fly, p1, slime, empty;
+let tilesHigh, tilesWide;
+let tileWidth, tileHeight;
+let levelToLoad;
+let lines;
+let stopMove;
+
+function preload() {
+  //load level data
+  levelToLoad = "assets/22.txt";
+  lines = loadStrings(levelToLoad);
+  //load background
+  levelBackground = loadImage("assets/level_background.png");
+  //load tile images
+  platform = loadImage("assets/platform.png");
+  coin = loadImage("assets/coin.png");
+  box = loadImage("assets/boxItem.png");
+  fly = createImg("assets/dragon_flying.gif");
+  slime = loadImage("assets/slimeWalk1.png");
+  //empty = loadImage("assets/empty.png");
+}
+
 function setup() {
-  createCanvas(400, 400);
+  // keep this a 4:3 ratio, or it will stretch in weird ways
+  createCanvas(800, 600);
+
+  tilesHigh = lines.length;
+  tilesWide = lines[0].length;
+
+  tileWidth = width / tilesWide;
+  tileHeight = height / tilesHigh;
+
+  tiles = createEmpty2dArray(tilesWide, tilesHigh);
+
+  //put values into 2d array of characters
+  for (let y = 0; y < tilesHigh; y++) {
+    for (let x = 0; x < tilesWide; x++) {
+      let tileType = lines[y][x];
+      tiles[x][y] = tileType;
+    }
+  }
 }
 
 function draw() {
-  background(0);
-  stroke(255);
-  strokeWeight(4);
-  noFill();
-  ellipse(x, y, 30, 30);
-
-  if (x < width) {
-    speed = -3;
-  }
-  if (x < 0) {
-    x = 400;
-  }
-  x = x + speed;
+  display();
 }
 
+function display() {
+  image(levelBackground, 0, 0, width, height);
 
-function keyPressed() {
-  if (keyCode === UP_ARROW) {
-    y = y - 10;
-  }
-  else if (keyCode === DOWN_ARROW) {
-    y = y + 10;
-  }
-  if (keyCode === LEFT_ARROW) {
-    x = x - 5;
-  }
-  else if (keyCode === RIGHT_ARROW) {
-    x = x + 5;
+  for (let y = 0; y < tilesHigh; y++) {
+    for (let x = 0; x < tilesWide; x++) {
+      showTile(tiles[x][y], x, y);
+    }
   }
 }
 
-function mousePressed() {
-  if (mousePressed) {
-    noLoop();
+function showTile(location, x, y) {
+  if (location === "#") {
+    image(platform, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
   }
-  else {
-    loop();
+  else if (location === "C") {
+    image(coin, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+  }
+  else if (location === "B") {
+    image(box, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+  }
+  else if (location === "F") {
+    fly.position(50,0);
+  }
+  else if (location === "S") {
+    image(slime, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+  }
+  else if ( location === "E") {
+    image(empty, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+  }
+
+}
+
+function keyPressed(){
+  if (keyCode === "RIGHT ARROW"){
+    return stopMove = true;
   }
 }
 
-function DodgeingCircle(){
-
+function createEmpty2dArray(cols, rows) {
+  let randomGrid = [];
+  for (let x = 0; x < cols; x++) {
+    randomGrid.push([]);
+    for (let y = 0; y < rows; y++) {
+      randomGrid[x].push(0);
+    }
+  }
+  return randomGrid;
 }
-
-function circles(){
-
-}
-
-
-
- function initBombs() {
-     for (let i = 0; i < numbofbombs; i++) {
-         bombacel[i] = random(.02, .03);
-         bombvel[i] = random(0, 5);
-         bombposX[i] = random(zapperwidth + (0.5 * ball_width), width);
-         bombposY[i] = random(-20, -0.5 * ball_width);
-     }
- }
-
-
- function bombCollision() {
-     var temp = 0.5 * (ball_width + bomb_diameter) - 2;
-     var distance;
-
-
-     for (var i = 0; i < numbofbombs; i++) {
-         distance = dist(xpoint, ypoint, bombposX[i], bombposY[i]);
-         if (distance < temp) {
-             return true;
-         }
